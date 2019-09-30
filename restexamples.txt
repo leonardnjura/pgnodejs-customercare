@@ -1,0 +1,22 @@
+POST {{url}}/api/auth/signup
+{
+	"personnel_fname": "Elizabeth",
+	"personnel_onames": "Wanga",
+    "personnel_phone": "0722141414",
+    "personnel_password": "1414"
+}
+POST {{url}}/api/auth/signin
+{
+    "personnel_phone": "0722141414",
+    "personnel_password": "1414"
+}
+GET {{url}}/api/auth/personnels
+GET {{url}}/api/auth/personnels/:id
+(ex-auth-token) + GET {{url}}/api/auth/personnel
+(ex-auth-token) + PATCH {{url}}/api/tasks/:id/assign
+{
+    "personnel_id": 2
+}
+(ex-auth-token) + DELETE {{url}}/api/tasks/:id
+GET {{url}}/api/tasks
+GET {{url}}/api/tasks/:id

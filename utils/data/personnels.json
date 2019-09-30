@@ -1,0 +1,48 @@
+{
+  "personnels": [
+    {
+      "personnel_onames": "Barack",
+      "personnel_fname": "Obama",
+      "personnel_email": null,
+      "personnel_phone": "0733333333",
+      "personnel_password": "$2a$10$ECdOnZkH6ZRE9jzvUst4x.PNqKwgSHcaoceTxazjMRg1VojEpHh6S",
+      "personnel_status": "1",
+      "last_login": null,
+      "personnel_type_id": "3",
+      "reset_password": "0"
+    },
+    {
+      "personnel_onames": "Salma",
+      "personnel_fname": "Nyagaka",
+      "personnel_email": null,
+      "personnel_phone": "0719191919",
+      "personnel_password": "$2a$10$ECdOnZkH6ZRE9jzvUst4x.PNqKwgSHcaoceTxazjMRg1VojEpHh6S",
+      "personnel_status": "1",
+      "last_login": null,
+      "personnel_type_id": "2",
+      "reset_password": "0"
+    },
+    {
+      "personnel_onames": "Pendo",
+      "personnel_fname": "Elizabeth",
+      "personnel_email": null,
+      "personnel_phone": "0710101010",
+      "personnel_password": "$2a$10$ECdOnZkH6ZRE9jzvUst4x.PNqKwgSHcaoceTxazjMRg1VojEpHh6S",
+      "personnel_status": "1",
+      "last_login": null,
+      "personnel_type_id": "2",
+      "reset_password": "0"
+    },
+    {
+      "personnel_onames": "John",
+      "personnel_fname": "Otieno",
+      "personnel_email": null,
+      "personnel_phone": "0722222222",
+      "personnel_password": "$2a$10$ECdOnZkH6ZRE9jzvUst4x.PNqKwgSHcaoceTxazjMRg1VojEpHh6S",
+      "personnel_status": "1",
+      "last_login": null,
+      "personnel_type_id": "2",
+      "reset_password": "0"
+    }
+  ]
+}

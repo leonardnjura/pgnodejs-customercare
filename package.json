@@ -1,0 +1,35 @@
+{
+  "name": "mysqlpersonnel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --refix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "Leo",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.1.2",
+    "config": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.7.0",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.10.1",
+    "sequelize-cli": "^5.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
