@@ -104,6 +104,41 @@ exports.fetchOneTask = (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err }));
 };
 
+exports.addTask = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  const {
+    customer_first_name,
+    customer_last_name,
+    customer_username,
+    customer_comments,
+    personnel_id
+  } = req.body;
+  const task_status_name = 'Deferred'; // default
+
+  // all ok
+  const newTask = new Task({
+    customer_first_name,
+    customer_last_name,
+    customer_username,
+    customer_comments,
+    personnel_id,
+    task_status_name
+  });
+
+  /**
+   * save already? oh yes!
+   * */
+  newTask
+    .save()
+    .then(task => {
+      res.status(201).json({ success: true, task });
+    })
+    .catch(err => res.status(400).json({ success: false, error: err }));
+};
+
 exports.updateTaskOwner = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -121,7 +156,7 @@ exports.updateTaskOwner = (req, res) => {
       /**
        * update already? no wait..
        * only admin to finish this */
-      let userMsg = '!Oops, you are not allowed to update';
+      let userMsg = '!Oops, you are not allowed to assign tasks';
       const surfer = req.personnel.personnel_id;
 
       Personnel.findOne({
@@ -136,6 +171,52 @@ exports.updateTaskOwner = (req, res) => {
             return task
               .update({
                 personnel_id
+              })
+              .then(() =>
+                res.status(200).json({ task, success: true, msg: userMsg })
+              );
+          });
+        } else {
+          // nobody else should save
+          return res.status(401).json({ success: false, msg: userMsg, surfer });
+        }
+      });
+    })
+    .catch(err => res.status(400).json({ success: false, error: err }));
+};
+
+exports.updateTaskStatus = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  const { task_status_name } = req.body;
+
+  Task.findOne({ where: { task_id: req.params.id } })
+    .then(task => {
+      if (!task) {
+        return res.status(404).json({ success: false, msg: '!Task not found' });
+      }
+
+      /**
+       * update already? no wait..
+       * only admin to finish this */
+      let userMsg = '!Oops, you are not allowed to update status';
+      const surfer = req.personnel.personnel_id;
+
+      Personnel.findOne({
+        where: { personnel_id: surfer, personnel_type_id: 3 }
+      }).then(personnel => {
+        if (personnel) {
+          userMsg = '!Task status successfully updated';
+          // admin may save
+          Task.findOne({
+            where: { task_id: req.params.id }
+          }).then(task => {
+            return task
+              .update({
+                task_status_name
               })
               .then(() =>
                 res.status(200).json({ task, success: true, msg: userMsg })
@@ -195,14 +276,60 @@ exports.deleteTask = (req, res) => {
  * VALIDATE TASK */
 exports.validate = method => {
   switch (method) {
+    case 'addTask': {
+      return [
+        check('customer_first_name')
+          .not()
+          .isEmpty()
+          .withMessage('customer_first_name is required')
+          .trim()
+          .escape(),
+        check('customer_last_name')
+          .not()
+          .isEmpty()
+          .withMessage('customer_last_name is required')
+          .trim()
+          .escape(),
+        check('customer_username')
+          .not()
+          .isEmpty()
+          .withMessage('customer_username is required')
+          .trim()
+          .escape(),
+        check('customer_comments')
+          .not()
+          .isEmpty()
+          .withMessage('customer_comments is required')
+          .trim()
+          .escape(),
+        check('personnel_id')
+          .not()
+          .isEmpty()
+          .withMessage('personnel_id is required')
+          .isInt()
+          .withMessage('must be an integer number')
+      ];
+    }
+
     case 'updateTaskOwner': {
       return [
         check('personnel_id')
           .not()
           .isEmpty()
           .withMessage('personnel_id is required')
-          .isIn([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-          .withMessage('status must be between 1 and 10')
+          .isInt()
+          .withMessage('must be an integer number')
+      ];
+    }
+
+    case 'updateTaskStatus': {
+      return [
+        check('task_status_name')
+          .not()
+          .isEmpty()
+          .withMessage('task_status_name is required')
+          .isIn(['Completed', 'Deferred'])
+          .withMessage('status must be Completed or Deferred')
       ];
     }
 

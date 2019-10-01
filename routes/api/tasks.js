@@ -10,6 +10,16 @@ const taskController = require('../../controllers/taskController');
 // @access  Public
 router.get('/', taskController.fetchAllTasks);
 
+// @route   POST api/tasks
+// @desc    Create a task
+// @access  Protected
+router.post(
+  '/',
+  auth,
+  taskController.validate('addTask'),
+  taskController.addTask
+);
+
 // @route   GET api/tasks/search?term=type
 // @desc    Search all tasks
 // @access  Public
@@ -28,6 +38,16 @@ router.patch(
   auth,
   taskController.validate('updateTaskOwner'),
   taskController.updateTaskOwner
+);
+
+// @route   PATCH api/tasks/:id/completed
+// @desc    Sets task status as completed( or deferred)
+// @access  Protected, admin?
+router.patch(
+  '/:id/completed',
+  auth,
+  taskController.validate('updateTaskStatus'),
+  taskController.updateTaskStatus
 );
 
 // @route   DELETE api/tasks/:id
