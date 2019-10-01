@@ -1,10 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Row,
+  Col
+} from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getTasks, deleteTask } from '../actions/taskActions';
 import PropTypes from 'prop-types';
 import CloseIcon from 'mdi-react/CloseIcon';
+import classNames from 'classnames';
 
 class TaskList extends Component {
   componentDidMount() {
@@ -19,112 +27,83 @@ class TaskList extends Component {
     const { tasks } = this.props.task;
     const { isAuthenticated, user } = this.props.auth;
 
-    let welcome = '';
     let isAdmin = false;
     if (isAuthenticated) {
-      welcome = user.personnel_fname;
-      console.log('FOO', user.personnel_type_id);
       if (user.personnel_type_id === 3) {
         isAdmin = true;
-        welcome = 'Admin';
       }
     }
-    // const list = [ 'h', 'e', 'l', 'l', 'o'];
-    // list.map((currElement, index) => {
-    //   console.log("The current iteration is: " + index);
-    //   console.log("The current element is: " + currElement);
-    //   console.log("\n");
-    //   return currElement; //equivalent to list[index]
-    // });
 
     return (
       <Container>
-        {isAuthenticated ? ( <ListGroup>
-          <TransitionGroup className="task-list">
-            {tasks.map((currElement, index) => {
-              
-              const {
-                task_id,
-                customer_first_name,
-                customer_last_name,
-                task_status_name
-              } = currElement
-              console.log("NUMBER", index, customer_last_name)
-              return(<CSSTransition key={task_id} timeout={500} classNames="fade">
-              <ListGroupItem>
-                 
-                   <Fragment>
-                   {isAdmin ? (<Button
-                       className="remove-btn"
-                       outline
-                       color="danger"
-                       size="sm"
-                       onClick={this.onDeleteClick.bind(this, task_id)}
-                     >
-                       <CloseIcon fontSize="30px" color="#ccc" />
-                     </Button>): null}
-                     
-                      <span className="list-no">{index+1}.</span>
-                     <ul className="subList">
-                       <li>
-                         <span>Task ID:</span> {task_id}
-                       </li>
-                       <li>
-                         <span>Customer:</span> {customer_first_name}{' '}
-                         {customer_last_name}
-                       </li>
-                       <li>
-                         <span>Status:</span> {task_status_name}
-                       </li>
-                     </ul>
-                   </Fragment>
-                 
-               </ListGroupItem>
-             </CSSTransition>)
-
-            })}
-            {/* {tasks.map(
-              ({
-                task_id,
-                customer_first_name,
-                customer_last_name,
-                task_status_name
-              }) => (
-                <CSSTransition key={task_id} timeout={500} classNames="fade">
-                 <ListGroupItem>
-                    
+        {isAuthenticated ? (
+          <ListGroup>
+            <TransitionGroup className="task-list">
+              {tasks.map((currElement, index) => {
+                const {
+                  task_id,
+                  customer_first_name,
+                  customer_last_name,
+                  task_status_name,
+                  personnel_id,
+                  customer_comments
+                } = currElement;
+                const completed = task_status_name === 'Completed';
+                return (
+                  <CSSTransition key={task_id} timeout={500} classNames="fade">
+                    <ListGroupItem>
                       <Fragment>
-                      {isAdmin ? (<Button
-                          className="remove-btn"
-                          outline
-                          color="danger"
-                          size="sm"
-                          onClick={this.onDeleteClick.bind(this, task_id)}
-                        >
-                          <CloseIcon fontSize="30px" color="#ccc" />
-                        </Button>): null}
-                        
+                        {isAdmin ? (
+                          <Button
+                            className="remove-btn"
+                            outline
+                            color="danger"
+                            size="sm"
+                            onClick={this.onDeleteClick.bind(this, task_id)}
+                          >
+                            <CloseIcon fontSize="30px" color="#ccc" />
+                          </Button>
+                        ) : null}
 
-                        <ul className="subList">
-                          <li>
-                            <span>Task ID:</span> {task_id}
-                          </li>
-                          <li>
-                            <span>Customer:</span> {customer_first_name}{' '}
-                            {customer_last_name}
-                          </li>
-                          <li>
-                            <span>Status:</span> {task_status_name}
-                          </li>
-                        </ul>
+                        <Row>
+                          <Col sm="6">
+                            <span className="list-no">{index + 1}.</span>
+                            <ul className="subList">
+                              <li>
+                                <span>Task ID:</span> {task_id}
+                              </li>
+                              <li>
+                                <span>Customer:</span> {customer_first_name}{' '}
+                                {customer_last_name}
+                              </li>
+
+                              <li>
+                                <span>Personnel Assigned:</span> {personnel_id}
+                              </li>
+                            </ul>
+                          </Col>
+                          <Col sm="6">
+                            <h4 className="notes-header">notes..</h4>
+                            <p className="notes">{customer_comments}</p>
+                            <span
+                              className={classNames({
+                                theme: completed,
+                                'bg-success': completed,
+                                'bg-danger': !completed,
+                                'px-1 mr-2': true
+                              })}
+                            ></span>
+                            {task_status_name}
+                          </Col>
+                        </Row>
                       </Fragment>
-                    
-                  </ListGroupItem>
-                </CSSTransition>
-              )
-            )} */}
-          </TransitionGroup>
-        </ListGroup>) : null}
+                    </ListGroupItem>
+                  </CSSTransition>
+                );
+              })}
+            </TransitionGroup>
+          </ListGroup>
+        ) : null}
       </Container>
     );
   }
@@ -138,7 +117,6 @@ TaskList.propTypes = {
 const mapStateToProps = state => ({
   task: state.task,
   auth: state.auth
-
 });
 
 export default connect(

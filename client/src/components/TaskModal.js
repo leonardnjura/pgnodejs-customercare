@@ -7,11 +7,12 @@ import {
   Form,
   FormGroup,
   Input,
-  Tooltip
+  Tooltip,
+  Row,
+  Col
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { addTask } from '../actions/taskActions';
-import uuid from 'uuid';
 import IosPersonOutline from 'react-ionicons/lib/IosPersonOutline';
 import IosAdd from 'react-ionicons/lib/IosAdd';
 import PropTypes from 'prop-types';
@@ -23,7 +24,8 @@ class TaskModal extends Component {
     customer_first_name: '',
     customer_last_name: '',
     customer_username: '',
-    customer_comments: ''
+    customer_comments: '',
+    personnel_id: ''
   };
 
   static propTypes = {
@@ -55,7 +57,8 @@ class TaskModal extends Component {
       customer_first_name: this.state.customer_first_name,
       customer_last_name: this.state.customer_last_name,
       customer_username: this.state.customer_username,
-      customer_comments: this.state.customer_comments
+      customer_comments: this.state.customer_comments,
+      personnel_id: this.state.personnel_id
     };
 
     // add task via addTask action
@@ -69,12 +72,9 @@ class TaskModal extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     let welcome = '';
-    let isAdmin = false;
     if (isAuthenticated) {
       welcome = user.personnel_fname;
-      console.log('FOO', user.personnel_type_id);
       if (user.personnel_type_id === 3) {
-        isAdmin = true;
         welcome = 'Admin';
       }
     }
@@ -107,50 +107,78 @@ class TaskModal extends Component {
             </Tooltip>
           </Fragment>
         ) : (
-          <h5 className="mb-3 ml-3"><span className="lol">!</span>Please login to view tasks</h5>
+          <h5 className="mb-3 ml-3">
+            <span className="lol">!</span>Please login to view tasks
+          </h5>
         )}
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle} className="theme">
             <IosAdd fontSize="33px" color="#43853d" />
             <br />
-            Create task
+            Create Task
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Input
-                  type="text"
-                  name="customer_first_name"
-                  id="customer_first_name"
-                  placeholder="Customer FirstName.."
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
-                <Input
-                  type="text"
-                  name="customer_last_name"
-                  id="customer_last_name"
-                  placeholder="Customer LastName.."
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
-                <Input
-                  type="text"
-                  name="customer_username"
-                  id="customer_username"
-                  placeholder="Customer Phone.."
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
-                <Input
-                  type="text"
-                  name="customer_comments"
-                  id="customer_comments"
-                  placeholder="Customer Comments.."
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
+                <Row>
+                  <Col sm="6">
+                    <Input
+                      type="text"
+                      name="customer_first_name"
+                      id="customer_first_name"
+                      placeholder="Customer FirstName.."
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </Col>
+                  <Col sm="6">
+                    <Input
+                      type="text"
+                      name="customer_last_name"
+                      id="customer_last_name"
+                      placeholder="Customer LastName.."
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col sm="6">
+                    <Input
+                      type="text"
+                      name="customer_username"
+                      id="customer_username"
+                      placeholder="Customer Phone.."
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </Col>
+                  <Col sm="6">
+                    <Input
+                      type="number"
+                      name="personnel_id"
+                      id="personnel_id"
+                      placeholder="Personnel ID.."
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col sm="12">
+                    <Input
+                      type="textarea"
+                      rows="4"
+                      name="customer_comments"
+                      id="customer_comments"
+                      placeholder="Customer Comments.."
+                      // className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </Col>
+                </Row>
                 <Button type="submit" style={{ marginTop: '2rem' }} block>
                   Save
                 </Button>

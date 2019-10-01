@@ -43,10 +43,20 @@
   text-transform:uppercase;
 }
 
-.list-no{
+.list-no, .fancy-big{
   font-size: 2em;color: #d3f2c9;
   font-family: 'Mansalva', cursive;
-  
+}
+
+.notes{
+  color: #43853d;
+  font-family: 'Mansalva', cursive;
+}
+
+.notes-header{
+  margin-top: 23px;
+  font-size: 1.3em;color: #efefef;
+  font-family: 'Mansalva', cursive;
 }
 
 .lol{
