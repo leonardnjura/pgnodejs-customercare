@@ -1,11 +1,9 @@
-
-
 export const GET_TASKS = 'GET_TASKS';
 export const ADD_TASK = 'ADD_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 export const TASKS_LOADING = 'TASKS_LOADING';
- 
-
+export const INCREMENT_TASKS_PAGE = 'INCREMENT_TASKS_PAGE';
+export const LOAD_MORE_TASKS = 'LOAD_MORE_TASKS';
 
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Mansalva|Varela+Round&display=swap');
-.App{
+.App {
   margin-bottom: 43px;
 }
 
@@ -27,39 +27,50 @@
   transition: opacity 1000ms ease-in;
 }
 
-.theme{
+.theme {
   color: #43853d;
 }
 
-.subList{
+.subList {
   margin-left: 13px;
   margin-top: -33px;
   padding-top: 33px;
 }
 
-.subList>li>span{
+.subList > li > span {
   font-weight: 600;
-  font-size:0.9em;
-  text-transform:uppercase;
+  font-size: 0.9em;
+  text-transform: uppercase;
 }
 
-.list-no, .fancy-big{
-  font-size: 2em;color: #d3f2c9;
+.list-no,
+.fancy-big {
+  font-size: 2em;
+  color: #d3f2c9;
   font-family: 'Mansalva', cursive;
 }
 
-.notes{
+.notes {
   color: #43853d;
   font-family: 'Mansalva', cursive;
 }
 
-.notes-header{
+.notes-header {
   margin-top: 23px;
-  font-size: 1.3em;color: #efefef;
+  font-size: 1.3em;
+  color: #efefef;
   font-family: 'Mansalva', cursive;
 }
 
-.lol{
-  font-size: 1.5em;color: #d3f2c9;
-  
+.lol {
+  font-size: 1.5em;
+  color: #d3f2c9;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #43853d;
+  padding: 0;
 }

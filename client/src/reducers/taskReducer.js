@@ -2,12 +2,17 @@ import {
   GET_TASKS,
   ADD_TASK,
   DELETE_TASK,
-  TASKS_LOADING
+  TASKS_LOADING,
+  INCREMENT_TASKS_PAGE,
+  LOAD_MORE_TASKS
 } from '../actions/types';
 
 const initialState = {
   tasks: [],
-  isLoading: false
+  hasMore: true,
+  isLoading: false,
+  pageNo: 1,
+  error: false
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +38,20 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: true
+      };
+
+    case LOAD_MORE_TASKS:
+      return {
+        ...state,
+        hasMore: state.tasks.length < 50,
+        isLoading: false,
+        tasks: [...state.tasks, ...action.payload]
+      };
+
+    case INCREMENT_TASKS_PAGE:
+      return {
+        ...state,
+        pageNo: state.pageNo + 1
       };
 
     default:
