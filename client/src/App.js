@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import AppNavbar from './components/AppNavbar';
-import TaskList from './components/TaskList';
+import InfiniteTaskList from './components/InfiniteTaskList';
 import TaskModal from './components/TaskModal';
 import { Container } from 'reactstrap';
 import { loadUser } from './actions/authActions';
@@ -23,7 +23,7 @@ class App extends Component {
           <AppNavbar />
           <Container>
             <TaskModal />
-            <TaskList />
+            <InfiniteTaskList />
           </Container>
         </div>
       </Provider>
