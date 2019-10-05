@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import AppNavbar from './components/AppNavbar';
+import NavBar from './components/NavBar';
 import InfiniteTaskList from './components/InfiniteTaskList';
 import TaskModal from './components/TaskModal';
 import { Container } from 'reactstrap';
@@ -20,11 +21,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <AppNavbar />
+          <NavBar />
+          {/* <AppNavbar />
           <Container>
             <TaskModal />
             <InfiniteTaskList />
-          </Container>
+          </Container> */}
         </div>
       </Provider>
     );
